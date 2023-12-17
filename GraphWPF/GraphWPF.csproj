@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="GraphApi">
-      <HintPath>..\api\GraphApi.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\GraphApi\GraphApi.vcxproj" />
   </ItemGroup>
 
 </Project>
