@@ -140,6 +140,9 @@ Generic::List<Generic::List<int>^>^ GraphApi::GraphHelper::adjacencyMatrix() {
 	auto adjacencyMatrix = gcnew Generic::List<Generic::List<int>^>();
 	for (int i = 0; i < size; ++i) {
 		auto row = gcnew Generic::List<int>(size);
+		for (int i = 0; i < size; i++) {
+			row[i] = 0;
+		}
 		adjacencyMatrix->Add(row);
 	}
 	for each (Edge ^ edge in edges) {
@@ -182,10 +185,13 @@ Generic::List<Generic::List<short>^>^ GraphApi::GraphHelper::incidenceMatrix() {
 	auto nodes = graph->getNodes();
 	auto edges = graph->getEdges();
 	auto incidenceMatrix = gcnew Generic::List<Generic::List<short>^>();
-	
 
 	for each (Node ^ node in nodes) {
-		incidenceMatrix->Add(gcnew Generic::List<short>(edges->Count));
+		auto row = gcnew Generic::List<short>(edges->Count);
+		for (int i = 0; i < edges->Count; i++) {
+			row[i] = 0;
+		}
+		incidenceMatrix->Add(row);
 	}
 	short id = 0;
 	for each (Edge ^ edge in edges) {
@@ -223,7 +229,10 @@ Generic::List<Generic::List<int>^>^ GraphApi::GraphHelper::weightMatrix() {
 	int numNodes = nodes->Count;
 
 	for (int i = 0; i < numNodes; i++) {
-		weightMatrix->Add(gcnew Generic::List<int>(numNodes));
+		auto row = gcnew Generic::List<int>(numNodes);
+		for (int i = 0; i < numNodes; i++)
+			row[i] = 0;
+		weightMatrix->Add(row);
 	}
 
 	for each (Edge ^ edge in edges) {
