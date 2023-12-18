@@ -40,7 +40,7 @@ namespace GraphWPF.Classes
                 
                 if (firstNode != null && secondNode != null)
                 {
-                    GraphCpp.changeDirection(firstNode, secondNode,1);
+                    GraphCpp.changeDirection(firstNode, secondNode,0);
                 }
             }
         }
@@ -100,6 +100,16 @@ namespace GraphWPF.Classes
             return graphHelper.weightMatrix();
         }
 
-       
+        public List<List<int>> GetAdjacencyMatrix()
+        {
+            GraphHelper graphHelper = new GraphHelper(GraphCpp);
+            return graphHelper.adjacencyMatrix();
+        }
+
+        public List<List<short>> GetIncidenceMatrix()
+        {
+            GraphHelper graphHelper = new GraphHelper(GraphCpp);
+            return graphHelper.incidenceMatrix();
+        }
     }
 }

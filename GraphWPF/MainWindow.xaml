@@ -188,7 +188,7 @@
                     <TranslateTransform X="0"/>
                 </TransformGroup>
             </Grid.RenderTransform>
-            <Canvas   MouseRightButtonDown="canvas_MouseRightButtonDown" MouseMove="canvas_MouseMove" Name="canvas" Width="900"   >
+            <Canvas MouseMove="canvas_MouseMove" Name="canvas" Width="900"   >
                 <Canvas.Background>
                     <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
                         <GradientStop Color="White" Offset="0"/>
