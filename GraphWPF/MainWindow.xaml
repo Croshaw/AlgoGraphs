@@ -83,26 +83,86 @@
                 <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Black" />
             </Style.Resources>
         </Style>
+        <Storyboard x:Key="OpenMatrixMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="400"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MatrixGroupBox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.4000000" Value="-400"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AdjacencyMatrix_GroupBox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="-400"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="IncidenceMatrix_GroupBox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-400"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.9000000" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMatrixMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="IncidenceMatrix_GroupBox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="-400"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AdjacencyMatrix_GroupBox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.1000000" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.4000000" Value="-400"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MatrixGroupBox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="-400"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="-400"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="-400"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
-    <Grid>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="OpenMatrixMenu">
+            <BeginStoryboard Storyboard="{StaticResource OpenMatrixMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="CloseMatrixMenu">
+            <BeginStoryboard Storyboard="{StaticResource CloseMatrixMenu}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid MouseDown="Grid_MouseDown" Grid.Row="0" Height="40" VerticalAlignment="Top" Background="#FF949494">
+        <Grid MouseDown="Grid_MouseDown" Grid.Row="0" Height="40" VerticalAlignment="Top" Background="#FF949494" >
 
-            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Margin=" 0 0 5 0">
-                <Button x:Name="ButtonMinimize" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="ButtonMinimize_Click">
-                    <materialDesign:PackIcon Kind="Minimize"/>
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Margin=" 0 0 5 0" >
+                <Button x:Name="ButtonMinimize" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="ButtonMinimize_Click" >
+                    <materialDesign:PackIcon Kind="Minimize" />
                 </Button>
-                <Button x:Name="ButtonClose" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click" Foreground="Black">
-                    <materialDesign:PackIcon Kind="Power"/>
+                <Button x:Name="ButtonClose" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click" Foreground="Black" >
+                    <materialDesign:PackIcon Kind="Power" />
                 </Button>
             </StackPanel >
-            <StackPanel Height="40" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top">
-                <Button x:Name="SettingsMenu" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="SettingsMenu_Click"  MouseRightButtonUp="SettingsMenu_MouseRightButtonUp">
-                    <materialDesign:PackIcon Kind="GearOutline"/>
+            <StackPanel Height="40" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" >
+                <Button x:Name="CloseMatrixMenu" Margin="-100 0 0 0"  Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="CloseMatrixMenu_Click" >
+                    <materialDesign:PackIcon Kind="Menu" />
+                </Button>
+                <Button x:Name="OpenMatrixMenu"  Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="OpenMatrixMenu_Click" >
+                    <materialDesign:PackIcon Kind="Menu" />
+                </Button>
+                <Button x:Name="SettingsMenu" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="SettingsMenu_Click"  MouseRightButtonUp="SettingsMenu_MouseRightButtonUp" >
+                    <materialDesign:PackIcon Kind="GearOutline" />
                     <Button.ContextMenu>
                         <ContextMenu x:Name="settingContextMenu" Style="{StaticResource ContextMenuStyle1}">
                             <MenuItem Header="Тип графа" Style="{StaticResource MaterialDesignMenuItem}">
@@ -112,12 +172,23 @@
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
+                <Button x:Name="refreshMatrixData" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="refreshMatrixData_Click" >
+                    <materialDesign:PackIcon Kind="Refresh" />
+                </Button>
             </StackPanel>
 
         </Grid>
 
-        <Grid Grid.Row="1">
-            <Canvas   MouseRightButtonDown="canvas_MouseRightButtonDown" MouseMove="canvas_MouseMove" Name="canvas" Width="900"  >
+        <Grid Grid.Row="1" Margin="0 0 0 0" >
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Canvas   MouseRightButtonDown="canvas_MouseRightButtonDown" MouseMove="canvas_MouseMove" Name="canvas" Width="900"   >
                 <Canvas.Background>
                     <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
                         <GradientStop Color="White" Offset="0"/>
@@ -149,6 +220,188 @@
                 </Canvas.ContextMenu>
             </Canvas>
 
+
+            <Grid x:Name="grid" Width="370" HorizontalAlignment="Left" Margin="-400 0 0 0" RenderTransformOrigin="0.5,0.5" >
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                    <Grid x:Name="grid1" Width="350" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5"  >
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="Row1" Height="Auto"/>
+                            <RowDefinition x:Name="Row2" Height="Auto"/>
+                            <RowDefinition x:Name="Row3" Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <GroupBox VerticalAlignment="Top" Height="265" x:Name="MatrixGroupBox"  Grid.Row="0" materialDesign:ColorZoneAssist.Mode="Dark" RenderTransformOrigin="0.5,0.5" >
+                            <GroupBox.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </GroupBox.RenderTransform>
+
+                            <GroupBox.Header>
+                                <WrapPanel >
+                                    <CheckBox IsChecked="True" Background="White" BorderBrush="White" >
+                                        <CheckBox.Triggers>
+                                            <EventTrigger RoutedEvent="CheckBox.Checked">
+                                                <!-- Expand animation -->
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="MatrixGroupBox" 
+                                         Storyboard.TargetProperty="Height"
+                                         From="{Binding ElementName=MatrixGroupBox, Path=Height}" 
+                                         To="{Binding ElementName=ContentSize, Path=DesiredSize.Height}"
+                                         Duration="0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="CheckBox.Unchecked">
+                                                <!-- Collapse animation -->
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="MatrixGroupBox" 
+                                         Storyboard.TargetProperty="Height"
+                                         From="{Binding ElementName=MatrixGroupBox, Path=Height}" 
+                                         To="40"
+                                         Duration="0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </CheckBox.Triggers>
+                                    </CheckBox>
+                                    <Label Content="Весовая матрица" Foreground="#DDFFFFFF" />
+                                </WrapPanel>
+                            </GroupBox.Header>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                                <DataGrid RowBackground="White" LoadingRow="WeigthMatrixDataGrid_LoadingRow"
+    CellStyle="{x:Null}"
+    ColumnHeaderStyle="{x:Null}"
+    RowStyle="{x:Null}"
+    RowHeaderStyle="{x:Null}"
+    Style="{x:Null}"  VerticalAlignment="Top"  x:Name="WeigthMatrixDataGrid" CanUserAddRows="False" RowHeaderWidth="50" Loaded="SetMinWidth_WeightMatrix" />
+                            </ScrollViewer>
+                        </GroupBox >
+                        <GroupBox x:Name="AdjacencyMatrix_GroupBox" Height="265" Grid.Row="1" materialDesign:ColorZoneAssist.Mode="Dark" RenderTransformOrigin="0.5,0.5" >
+                            <GroupBox.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </GroupBox.RenderTransform>
+                            <GroupBox.Header>
+                                <WrapPanel >
+                                    <CheckBox IsChecked="True" Background="White" BorderBrush="White" >
+                                        <CheckBox.Triggers>
+                                            <EventTrigger RoutedEvent="CheckBox.Checked">
+                                                <!-- Expand animation -->
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="AdjacencyMatrix_GroupBox" 
+                                         Storyboard.TargetProperty="Height"
+                                         From="{Binding ElementName=AdjacencyMatrix_GroupBox, Path=Height}" 
+                                         To="{Binding ElementName=ContentSize, Path=DesiredSize.Height}"
+                                         Duration="0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="CheckBox.Unchecked">
+                                                <!-- Collapse animation -->
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="AdjacencyMatrix_GroupBox" 
+                                         Storyboard.TargetProperty="Height"
+                                         From="{Binding ElementName=AdjacencyMatrix_GroupBox, Path=Height}" 
+                                         To="40"
+                                         Duration="0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </CheckBox.Triggers>
+                                    </CheckBox>
+                                    <Label Content="Матрица смежности" Foreground="#DDFFFFFF" />
+                                </WrapPanel>
+                            </GroupBox.Header>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  >
+                                <DataGrid RowHeaderWidth="50" CellStyle="{x:Null}" LoadingRow="AdjacencyMatrixDataGrid_LoadingRow"
+    ColumnHeaderStyle="{x:Null}"
+    RowStyle="{x:Null}"
+    RowHeaderStyle="{x:Null}"
+    Style="{x:Null}" Grid.Row="2" x:Name="AdjacencyMatrixDataGrid" CanUserAddRows="False" VerticalAlignment="Top" Loaded="SetMinWidth_AdjacencyMatrix" />
+                            </ScrollViewer>
+                        </GroupBox>
+                        <GroupBox x:Name="IncidenceMatrix_GroupBox" Height="265" Grid.Row="2" materialDesign:ColorZoneAssist.Mode="Dark" RenderTransformOrigin="0.5,0.5" >
+                            <GroupBox.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </GroupBox.RenderTransform>
+                            <GroupBox.Header>
+                                <WrapPanel >
+                                    <CheckBox IsChecked="True" Background="White" BorderBrush="White" >
+                                        <CheckBox.Triggers>
+                                            <EventTrigger RoutedEvent="CheckBox.Checked">
+                                                <!-- Expand animation -->
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="IncidenceMatrix_GroupBox" 
+                                         Storyboard.TargetProperty="Height"
+                                         From="{Binding ElementName=IncidenceMatrix_GroupBox, Path=Height}" 
+                                         To="{Binding ElementName=ContentSize, Path=DesiredSize.Height}"
+                                         Duration="0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="CheckBox.Unchecked">
+                                                <!-- Collapse animation -->
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="IncidenceMatrix_GroupBox" 
+                                         Storyboard.TargetProperty="Height"
+                                         From="{Binding ElementName=IncidenceMatrix_GroupBox, Path=Height}" 
+                                         To="40"
+                                         Duration="0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </CheckBox.Triggers>
+                                    </CheckBox>
+                                    <Label Content="Матрица инцидентности" Foreground="#DDFFFFFF" />
+                                </WrapPanel>
+                            </GroupBox.Header>
+                            <ScrollViewer  Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                                <DataGrid RowHeaderWidth="50" CellStyle="{x:Null}" LoadingRow="IncidenceMatrixDataGrid_LoadingRow"
+    ColumnHeaderStyle="{x:Null}"
+    RowStyle="{x:Null}"
+    RowHeaderStyle="{x:Null}"
+    Style="{x:Null}"  x:Name="IncidenceMatrixDataGrid" CanUserAddRows="False" VerticalAlignment="Top" Loaded="SetMinWidth_IncidenceMatrix" />
+                            </ScrollViewer>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
 
         </Grid>
     </Grid>
