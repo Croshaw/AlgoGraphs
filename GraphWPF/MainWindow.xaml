@@ -3,10 +3,154 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:toolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
         xmlns:local="clr-namespace:GraphWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="900"
+        Topmost="True" WindowStyle="None"
+        ResizeMode="CanResizeWithGrip" 
+        AllowsTransparency="True">
+    <Window.Resources>
+        <Style x:Key="ContextMenuStyle1" 
+    TargetType="{x:Type ContextMenu}">
+            <Setter Property="Background" 
+        Value="{DynamicResource MenuBackgroundBrush}"/>
+            <Setter Property="BorderThickness" 
+        Value="1"/>
+            <Setter Property="BorderBrush" 
+        Value="{DynamicResource WindowBorderBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContextMenu}">
+                        <Border Uid="Border_93">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="Tag" 
+                                Value="{DynamicResource 
+                                    {x:Static SystemParameters.DropShadowKey}}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger 
+                                        Binding="{Binding Tag, 
+                                            RelativeSource={RelativeSource Self}}" 
+                                        Value="True">
+                                            <Setter Property="Background" 
+                                        Value="Transparent"/>
+                                            <Setter Property="Padding" 
+                                        Value="0,0,5,5"/>
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect 
+                                                BlurRadius="4" 
+                                                Opacity="0.8" 
+                                                ShadowDepth="1"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            Uid="Border_50">
+                                <ScrollViewer CanContentScroll="True" 
+                            Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, 
+                                    TypeInTargetAssembly={x:Type FrameworkElement}}}" 
+                                    Uid="ScrollViewer_9">
+                                    <ItemsPresenter 
+                                KeyboardNavigation.DirectionalNavigation="Cycle" 
+                                Margin="{TemplateBinding Padding}" 
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                Uid="ItemsPresenter_5"/>
+                                </ScrollViewer>
+                            </Border>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ContextMenu x:Key="settingsMenu">
+            <MenuItem>
+
+            </MenuItem>
+        </ContextMenu>
+        <Style x:Key="CustomMaterialDesignFlatButton" 
+        BasedOn="{StaticResource MaterialDesignFlatButton}"
+        TargetType="{x:Type Button}">
+            <Style.Resources>
+                <Color x:Key="PrimaryHueMidBrushColor">Black</Color>
+                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Black" />
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
     <Grid>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid MouseDown="Grid_MouseDown" Grid.Row="0" Height="40" VerticalAlignment="Top" Background="#FF949494">
+
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Margin=" 0 0 5 0">
+                <Button x:Name="ButtonMinimize" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="ButtonMinimize_Click">
+                    <materialDesign:PackIcon Kind="Minimize"/>
+                </Button>
+                <Button x:Name="ButtonClose" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click" Foreground="Black">
+                    <materialDesign:PackIcon Kind="Power"/>
+                </Button>
+            </StackPanel >
+            <StackPanel Height="40" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button x:Name="SettingsMenu" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="SettingsMenu_Click"  MouseRightButtonUp="SettingsMenu_MouseRightButtonUp">
+                    <materialDesign:PackIcon Kind="GearOutline"/>
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name="settingContextMenu" Style="{StaticResource ContextMenuStyle1}">
+                            <MenuItem Header="Тип графа" Style="{StaticResource MaterialDesignMenuItem}">
+                                <RadioButton x:Name="SetDirected" Content="Ориентированный" IsChecked ="True" Checked="SetDirected_Checked"/>
+                                <RadioButton x:Name="SetUndirected" Content="Неориентированный" IsChecked="False" Checked="SetUndirected_Checked"/>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Canvas   MouseRightButtonDown="canvas_MouseRightButtonDown" MouseMove="canvas_MouseMove" Name="canvas" Width="900"  >
+                <Canvas.Background>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#d6d6d6" Offset="-0.5"/>
+                        <GradientStop Color="#d6d6d6" Offset="1.5"/>
+                    </LinearGradientBrush>
+                </Canvas.Background>
+
+                <Canvas.Triggers>
+                    <EventTrigger RoutedEvent="Window.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Grid.Background).(LinearGradientBrush.GradientStops)[0].Offset" From="-0.5" To="1.5"
+                                                                    Duration="0:0:10"
+                                                                    RepeatBehavior="Forever"
+                                                                    AutoReverse="True">
+
+
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Canvas.Triggers>
+                <Canvas.ContextMenu>
+                    <ContextMenu Style="{StaticResource MaterialDesignMenu}">
+                        <MenuItem Click="MenuItem_Click" Header="Добавить узел"/>
+                        <MenuItem Header="Очистить поле"/>
+                    </ContextMenu>
+                </Canvas.ContextMenu>
+            </Canvas>
+
+
+        </Grid>
     </Grid>
 </Window>
+
