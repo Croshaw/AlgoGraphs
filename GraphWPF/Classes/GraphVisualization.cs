@@ -26,6 +26,8 @@ namespace GraphWPF.Classes {
         private readonly int _circleWidth = 35;
         private readonly int _supportEllipseWidth = 6;
         private readonly int _lineStrokeThicknes = 2;
+        private readonly int _lineSelectedStrokeThicknes = 3;
+        private readonly int _ellipseSelectedStrokeThicknes = 3;
         private readonly int _ellipseStrokeThicknes = 2;
         private readonly int _positionCorrectionTextY = 8;
         private readonly int _positionCorrectionTextX = 3;
@@ -151,6 +153,7 @@ namespace GraphWPF.Classes {
             if (SelectedLine != null)
             {
                 SelectedLine.ArrowEnds = ArrowEnds.End;
+                if (EdgeDirectionChanged != null) EdgeDirectionChanged(SelectedLine, new GraphEventArgs(EllipseData[EllipseLinks[SelectedLine][0]].Text, EllipseData[EllipseLinks[SelectedLine][1]].Text));
             }
         }
 
@@ -159,6 +162,7 @@ namespace GraphWPF.Classes {
             if (SelectedLine != null)
             {
                 SelectedLine.ArrowEnds = ArrowEnds.Both;
+                if (EdgeDirectionChanged != null) EdgeDirectionChanged(SelectedLine, new GraphEventArgs(EllipseData[EllipseLinks[SelectedLine][0]].Text, EllipseData[EllipseLinks[SelectedLine][1]].Text));
             }
         }
 
@@ -169,7 +173,7 @@ namespace GraphWPF.Classes {
                 if (SelectedLine.ArrowEnds == ArrowEnds.End)
                 {
                     SelectedLine.ArrowEnds = ArrowEnds.Start;
-                    if (EdgeDirectionChanged != null) EdgeDirectionChanged(SelectedLine, new GraphEventArgs(EllipseData[EllipseLinks[SelectedLine][0]].Text, EllipseData[EllipseLinks[SelectedLine][0]].Text));
+                    if (EdgeDirectionChanged != null) EdgeDirectionChanged(SelectedLine, new GraphEventArgs(EllipseData[EllipseLinks[SelectedLine][0]].Text, EllipseData[EllipseLinks[SelectedLine][1]].Text));
                 }
                 else
                 {
@@ -464,7 +468,8 @@ namespace GraphWPF.Classes {
                 {
                     line.ArrowEnds = ArrowEnds.None;
                 }
-                if (LinesData[firstEllipse].FirstOrDefault(f => f.X1 == line.X1 && f.X2 == line.X2 && f.Y1 == line.Y1 && f.Y2 == line.Y2) == null)
+                if (LinesData[firstEllipse].FirstOrDefault(f => f.X1 == line.X1 && f.X2 == line.X2 && f.Y1 == line.Y1 && f.Y2 == line.Y2) == null&&
+                    LinesData[firstEllipse].FirstOrDefault(f => f.X2 == line.X1 && f.X1 == line.X2 && f.Y2 == line.Y1 && f.Y1 == line.Y2) == null)
                 {
                     CanvasControl.Children.Add(line);
                     LinesData[firstEllipse].Add(line);
@@ -655,9 +660,22 @@ namespace GraphWPF.Classes {
             line.X2 = contactPoints.contactPointSecondCircle.X;
             line.Y2 = contactPoints.contactPointSecondCircle.Y;
             line.MouseRightButtonDown += Line_MouseRightButtonDown;
+            line.MouseEnter += Line_MouseEnter;
+            line.MouseLeave += Line_MouseLeave;
+            
             line.ContextMenu = ContextLineMenu;
 
             return line;
+        }
+
+        private void Line_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((ArrowLine)sender).StrokeThickness = _lineStrokeThicknes;
+        }
+
+        private void Line_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((ArrowLine)sender).StrokeThickness = _lineSelectedStrokeThicknes;
         }
 
         private void Line_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -743,6 +761,7 @@ namespace GraphWPF.Classes {
                 foreach (var line in lineList)
                 {
                     line.ArrowEnds = ArrowEnds.None;
+                    if (EdgeDirectionChanged != null) EdgeDirectionChanged(line, new GraphEventArgs(EllipseData[EllipseLinks[line][0]].Text, EllipseData[EllipseLinks[line][1]].Text));
                 }
             }
             _isDirected =false;
@@ -756,10 +775,20 @@ namespace GraphWPF.Classes {
                 foreach(var line in lineList)
                 {
                     line.ArrowEnds = ArrowEnds.End;
+                    if (EdgeDirectionChanged != null) EdgeDirectionChanged(line, new GraphEventArgs(EllipseData[EllipseLinks[line][0]].Text, EllipseData[EllipseLinks[line][1]].Text));
                 }
             }
             _isDirected =true;  
         }
 
+        public void ClearVisualization()
+        {
+            List<Ellipse> deleteTemp = new List<Ellipse>(EllipseList);
+            foreach(var item in deleteTemp)
+            {
+                RemoveNode(item);
+            }
+            int i = 10;
+        }
     }
 }

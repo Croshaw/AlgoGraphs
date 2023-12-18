@@ -161,7 +161,7 @@
                 <Button x:Name="OpenMatrixMenu"  Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="OpenMatrixMenu_Click" >
                     <materialDesign:PackIcon Kind="Menu" />
                 </Button>
-                <Button x:Name="SettingsMenu" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="SettingsMenu_Click"  MouseRightButtonUp="SettingsMenu_MouseRightButtonUp" >
+                <Button x:Name="SettingsMenu" Style="{StaticResource CustomMaterialDesignFlatButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="SettingsMenu_Click"  MouseRightButtonUp="SettingsMenu_MouseRightButtonUp" Cursor="" >
                     <materialDesign:PackIcon Kind="GearOutline" />
                     <Button.ContextMenu>
                         <ContextMenu x:Name="settingContextMenu" Style="{StaticResource ContextMenuStyle1}">
@@ -169,6 +169,7 @@
                                 <RadioButton x:Name="SetDirected" Content="Ориентированный" IsChecked ="True" Checked="SetDirected_Checked"/>
                                 <RadioButton x:Name="SetUndirected" Content="Неориентированный" IsChecked="False" Checked="SetUndirected_Checked"/>
                             </MenuItem>
+                            <RadioButton x:Name="SearchMode" Content="Режим поиска" IsChecked="False"/>
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
@@ -215,7 +216,7 @@
                 <Canvas.ContextMenu>
                     <ContextMenu Style="{StaticResource MaterialDesignMenu}">
                         <MenuItem Click="MenuItem_Click" Header="Добавить узел"/>
-                        <MenuItem Header="Очистить поле"/>
+                        <MenuItem Click="MenuItem_Click_ClearField" Header="Очистить поле"/>
                     </ContextMenu>
                 </Canvas.ContextMenu>
             </Canvas>
@@ -342,7 +343,7 @@
                                 </WrapPanel>
                             </GroupBox.Header>
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  >
-                                <DataGrid RowHeaderWidth="50" CellStyle="{x:Null}" LoadingRow="AdjacencyMatrixDataGrid_LoadingRow"
+                                <DataGrid RowHeaderWidth="50" CellStyle="{x:Null}" LoadingRow="AdjacencyMatrixDataGrid_LoadingRow" CanUserDeleteRows="False" CanUserSortColumns="False" IsReadOnly="True"
     ColumnHeaderStyle="{x:Null}"
     RowStyle="{x:Null}"
     RowHeaderStyle="{x:Null}"
@@ -392,7 +393,7 @@
                                 </WrapPanel>
                             </GroupBox.Header>
                             <ScrollViewer  Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
-                                <DataGrid RowHeaderWidth="50" CellStyle="{x:Null}" LoadingRow="IncidenceMatrixDataGrid_LoadingRow"
+                                <DataGrid RowHeaderWidth="50" CellStyle="{x:Null}" LoadingRow="IncidenceMatrixDataGrid_LoadingRow" CanUserDeleteRows="False" CanUserSortColumns="False" IsReadOnly="True"
     ColumnHeaderStyle="{x:Null}"
     RowStyle="{x:Null}"
     RowHeaderStyle="{x:Null}"

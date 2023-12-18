@@ -90,21 +90,6 @@ namespace GraphWPF
             }
         }
 
-        private string[][] ConvertMatrixToString(List<List<int>> matrix)
-        {
-            
-            string[][] stringMatrix = new string[matrix.Count][];
-            for (int i = 0; i < matrix.Count; i++)
-            {
-                stringMatrix[i] = new string[matrix.Max(f => f.Count)];
-                for (int j = 0; j < stringMatrix[i].Length; j++)
-                {
-                    stringMatrix[i][j] = Convert.ToString(matrix[i][j]);
-                }
-            }
-            return stringMatrix;
-        }
-
         private void SetMinWidth_WeightMatrix(object sender, RoutedEventArgs e)
         {
             foreach (var column in WeigthMatrixDataGrid.Columns)
@@ -175,9 +160,10 @@ namespace GraphWPF
         {
             DataTable weightTable = new DataTable("WeightTable");
             List<List<int>> weightMatrix = GraphWorkerCpp.GetWeigthMatrix();
+            if (weightMatrix.Count == 0) return;
             for (int i = 0; i < weightMatrix[0].Count; i++)
             {
-                DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
+                DataColumn dataColumn = new DataColumn(Convert.ToString(i + 1), typeof(string));
                 weightTable.Columns.Add(dataColumn);
             }
             for (int i = 0; i < weightMatrix.Count; i++)
@@ -185,7 +171,14 @@ namespace GraphWPF
                 DataRow dataRow = weightTable.NewRow();
                 for (int j = 0; j < weightMatrix[i].Count; j++)
                 {
-                    dataRow[j] = weightMatrix[i][j];
+                    if (weightMatrix[i][j] == -1)
+                    {
+                        dataRow[j] = "inf";
+                    }
+                    else 
+                    {
+                        dataRow[j] = weightMatrix[i][j];
+                    }
                 }
                 weightTable.Rows.Add(dataRow);
             }
@@ -196,9 +189,10 @@ namespace GraphWPF
         {
             DataTable adjacencyTable = new DataTable("AdjacencyTable");
             List<List<int>> adjacencyMatrix = GraphWorkerCpp.GetAdjacencyMatrix();
+            if (adjacencyMatrix.Count == 0) return;
             for (int i = 0; i < adjacencyMatrix[0].Count; i++)
             {
-                DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
+                DataColumn dataColumn = new DataColumn(Convert.ToString(i+1), typeof(int));
                 adjacencyTable.Columns.Add(dataColumn);
             }
             for (int i = 0; i < adjacencyMatrix.Count; i++)
@@ -217,9 +211,10 @@ namespace GraphWPF
         {
             DataTable incidenceTable = new DataTable("IncidenceTable");
             List<List<short>> incidenceMatrix = GraphWorkerCpp.GetIncidenceMatrix();
+            if(incidenceMatrix.Count == 0) return;  
             for (int i = 0; i < incidenceMatrix[0].Count; i++)
             {
-                DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
+                DataColumn dataColumn = new DataColumn(Convert.ToString(i+1), typeof(int));
                 incidenceTable.Columns.Add(dataColumn);
             }
             for (int i = 0; i < incidenceMatrix.Count; i++)
@@ -232,6 +227,11 @@ namespace GraphWPF
                 incidenceTable.Rows.Add(dataRow);
             }
             this.IncidenceMatrixDataGrid.ItemsSource = incidenceTable.DefaultView;
+        }
+
+        private void MenuItem_Click_ClearField(object sender, RoutedEventArgs e)
+        {
+            DrawGraph.ClearVisualization();
         }
     }
 }
