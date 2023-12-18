@@ -40,7 +40,7 @@ namespace GraphWPF.Classes
                 
                 if (firstNode != null && secondNode != null)
                 {
-                    GraphCpp.changeDirection(firstNode, secondNode, 0);
+                    GraphCpp.changeDirection(firstNode, secondNode,1);
                 }
             }
         }
@@ -99,5 +99,7 @@ namespace GraphWPF.Classes
             GraphHelper graphHelper = new GraphHelper(GraphCpp);
             return graphHelper.weightMatrix();
         }
+
+       
     }
 }
