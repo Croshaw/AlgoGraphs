@@ -15,6 +15,10 @@ namespace GraphApi {
 		Node^ begin;
 		Node^ end;
 		int weight;
+		// 0 - begin - end
+		// 1 - begin -> end
+		// -1 - begin <- end
+		// 2 - begin <-> end
 		short direction = 0;
 	};
 
@@ -51,5 +55,7 @@ namespace GraphApi {
 		Generic::List<Generic::List<short>^>^ incidenceMatrix();
 		Generic::List<Generic::List<int>^>^ weightMatrix();
 		Generic::List<Edge^>^ minSpanningTree();
+		int getPathLength();
+		int getPathLength(Generic::List<Edge^>^ edges);
 	};
 }
