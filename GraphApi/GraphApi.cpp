@@ -139,9 +139,9 @@ Generic::List<Generic::List<int>^>^ GraphApi::GraphHelper::adjacencyMatrix() {
 	int size = nodes->Count;
 	auto adjacencyMatrix = gcnew Generic::List<Generic::List<int>^>();
 	for (int i = 0; i < size; ++i) {
-		auto row = gcnew Generic::List<int>(size);
+		auto row = gcnew Generic::List<int>();
 		for (int i = 0; i < size; i++) {
-			row[i] = 0;
+			row->Add(0);
 		}
 		adjacencyMatrix->Add(row);
 	}
@@ -187,9 +187,9 @@ Generic::List<Generic::List<short>^>^ GraphApi::GraphHelper::incidenceMatrix() {
 	auto incidenceMatrix = gcnew Generic::List<Generic::List<short>^>();
 
 	for each (Node ^ node in nodes) {
-		auto row = gcnew Generic::List<short>(edges->Count);
+		auto row = gcnew Generic::List<short>();
 		for (int i = 0; i < edges->Count; i++) {
-			row[i] = 0;
+			row->Add(0);
 		}
 		incidenceMatrix->Add(row);
 	}
@@ -229,9 +229,9 @@ Generic::List<Generic::List<int>^>^ GraphApi::GraphHelper::weightMatrix() {
 	int numNodes = nodes->Count;
 
 	for (int i = 0; i < numNodes; i++) {
-		auto row = gcnew Generic::List<int>(numNodes);
+		auto row = gcnew Generic::List<int>);
 		for (int i = 0; i < numNodes; i++)
-			row[i] = 0;
+			row->Add(0);
 		weightMatrix->Add(row);
 	}
 
