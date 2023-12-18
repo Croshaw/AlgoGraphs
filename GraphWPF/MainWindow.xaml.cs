@@ -47,11 +47,6 @@ namespace GraphWPF
             DrawGraph.AddNode();
         }
 
-        private void canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -93,27 +88,6 @@ namespace GraphWPF
             {
                 DrawGraph.SetGraphUndirected();
             }
-        }
-
-        private void FillWeightMatrix()
-        {
-            DataTable weightTable = new DataTable("WeightTable");
-            List<List<int>> weightMatrix = GraphWorkerCpp.GetWeigthMatrix();
-            for(int i = 0; i < weightMatrix.Count; i++)
-            {
-                DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
-                weightTable.Columns.Add(dataColumn);
-            }
-            for(int i = 0;i < weightMatrix.Count; i++)
-            {
-                DataRow dataRow = weightTable.NewRow();
-                for (int j = 0; j < weightMatrix[i].Count; j++)
-                {
-                    dataRow[j] = weightMatrix[i][j];
-                }
-                weightTable.Rows.Add(dataRow);
-            }
-            this.WeigthMatrixDataGrid.ItemsSource = weightTable.DefaultView;
         }
 
         private string[][] ConvertMatrixToString(List<List<int>> matrix)
@@ -163,16 +137,6 @@ namespace GraphWPF
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void AdjacencyMatrixDataGrid_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void IncidenceMatrixDataGrid_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void AdjacencyMatrixDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
@@ -183,11 +147,6 @@ namespace GraphWPF
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void OpenMatrixMenu_Click(object sender, RoutedEventArgs e)
         {
             ((Button)sender).Margin= new Thickness(-100,0,0,0);
@@ -196,13 +155,83 @@ namespace GraphWPF
 
         private void refreshMatrixData_Click(object sender, RoutedEventArgs e)
         {
-            FillWeightMatrix();
+            FillTables();
         }
 
         private void CloseMatrixMenu_Click(object sender, RoutedEventArgs e)
         {
             ((Button)sender).Margin = new Thickness(-100, 0, 0, 0);
             OpenMatrixMenu.Margin = new Thickness(0, 0, 0, 0);
+        }
+
+        private void FillTables()
+        {
+            FillAdjacencyMatrix();
+            FillWeightMatrix();
+            FillIncidenceMatrix();
+        }
+
+        private void FillWeightMatrix()
+        {
+            DataTable weightTable = new DataTable("WeightTable");
+            List<List<int>> weightMatrix = GraphWorkerCpp.GetWeigthMatrix();
+            for (int i = 0; i < weightMatrix.Count; i++)
+            {
+                DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
+                weightTable.Columns.Add(dataColumn);
+            }
+            for (int i = 0; i < weightMatrix.Count; i++)
+            {
+                DataRow dataRow = weightTable.NewRow();
+                for (int j = 0; j < weightMatrix[i].Count; j++)
+                {
+                    dataRow[j] = weightMatrix[i][j];
+                }
+                weightTable.Rows.Add(dataRow);
+            }
+            this.WeigthMatrixDataGrid.ItemsSource = weightTable.DefaultView;
+        }
+
+        private void FillAdjacencyMatrix()
+        {
+            DataTable adjacencyTable = new DataTable("AdjacencyTable");
+            List<List<int>> adjacencyMatrix = GraphWorkerCpp.GetAdjacencyMatrix();
+            for (int i = 0; i < adjacencyMatrix.Count; i++)
+            {
+                DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
+                adjacencyTable.Columns.Add(dataColumn);
+            }
+            for (int i = 0; i < adjacencyMatrix.Count; i++)
+            {
+                DataRow dataRow = adjacencyTable.NewRow();
+                for (int j = 0; j < adjacencyMatrix[i].Count; j++)
+                {
+                    dataRow[j] = adjacencyMatrix[i][j];
+                }
+                adjacencyTable.Rows.Add(dataRow);
+            }
+            this.AdjacencyMatrixDataGrid.ItemsSource = adjacencyTable.DefaultView;
+        }
+
+        private void FillIncidenceMatrix()
+        {
+            DataTable incidenceTable = new DataTable("IncidenceTable");
+            List<List<short>> incidenceMatrix = GraphWorkerCpp.GetIncidenceMatrix();
+            for (int i = 0; i < incidenceMatrix.Count; i++)
+            {
+                DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
+                incidenceTable.Columns.Add(dataColumn);
+            }
+            for (int i = 0; i < incidenceMatrix.Count; i++)
+            {
+                DataRow dataRow = incidenceTable.NewRow();
+                for (int j = 0; j < incidenceMatrix[i].Count; j++)
+                {
+                    dataRow[j] = incidenceMatrix[i][j];
+                }
+                incidenceTable.Rows.Add(dataRow);
+            }
+            this.IncidenceMatrixDataGrid.ItemsSource = incidenceTable.DefaultView;
         }
     }
 }
