@@ -17,7 +17,7 @@ namespace GraphWPF.Classes {
     
     public class GraphVisualization
     {
-        private int increment = 0;
+        private int increment = 1;
 
         private bool _isEllipseDragInProg = false;
         private bool _isLineCapture = false;
@@ -169,7 +169,7 @@ namespace GraphWPF.Classes {
                 if (SelectedLine.ArrowEnds == ArrowEnds.End)
                 {
                     SelectedLine.ArrowEnds = ArrowEnds.Start;
-                    if (EdgeDirectionChanged != null) EdgeDirectionChanged(SelectedLine, new GraphEventArgs(EllipseData[EllipseLinks[SelectedLine][1]].Text, EllipseData[EllipseLinks[SelectedLine][0]].Text));
+                    if (EdgeDirectionChanged != null) EdgeDirectionChanged(SelectedLine, new GraphEventArgs(EllipseData[EllipseLinks[SelectedLine][0]].Text, EllipseData[EllipseLinks[SelectedLine][0]].Text));
                 }
                 else
                 {
@@ -472,6 +472,7 @@ namespace GraphWPF.Classes {
                     EllipseLinks.Add(line,new List<Ellipse> { firstEllipse, secondEllipse });
                     ArrowsWeight.Add(line, 1);
                     if(AddEdgeComplete!=null) AddEdgeComplete(line,new GraphEventArgs(EllipseData[firstEllipse].Text, EllipseData[secondEllipse].Text));
+                    if (EdgeDirectionChanged != null) EdgeDirectionChanged(line, new GraphEventArgs(EllipseData[firstEllipse].Text, EllipseData[secondEllipse].Text));
                 }
 
             }

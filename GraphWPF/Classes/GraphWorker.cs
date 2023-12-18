@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphApi;
 using System.Windows.Shapes;
+using GraphWPF.Classes.ArrowLineControl;
 
 namespace GraphWPF.Classes
 {
@@ -40,7 +41,22 @@ namespace GraphWPF.Classes
                 
                 if (firstNode != null && secondNode != null)
                 {
-                    GraphCpp.changeDirection(firstNode, secondNode,0);
+                    if (((ArrowLine)sender).ArrowEnds == ArrowEnds.None)
+                    {
+                        GraphCpp.changeDirection(firstNode, secondNode, 0);
+                    }
+                    else if (((ArrowLine)sender).ArrowEnds == ArrowEnds.End)
+                    {
+                        GraphCpp.changeDirection(firstNode, secondNode, 1);
+                    }
+                    else if(((ArrowLine)sender).ArrowEnds == ArrowEnds.Start)
+                    {
+                        GraphCpp.changeDirection(firstNode, secondNode, -1);
+                    }
+                    else
+                    {
+                        GraphCpp.changeDirection(firstNode, secondNode, 2);
+                    }
                 }
             }
         }

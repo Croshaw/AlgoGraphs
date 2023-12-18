@@ -175,7 +175,7 @@ namespace GraphWPF
         {
             DataTable weightTable = new DataTable("WeightTable");
             List<List<int>> weightMatrix = GraphWorkerCpp.GetWeigthMatrix();
-            for (int i = 0; i < weightMatrix.Count; i++)
+            for (int i = 0; i < weightMatrix[0].Count; i++)
             {
                 DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
                 weightTable.Columns.Add(dataColumn);
@@ -196,7 +196,7 @@ namespace GraphWPF
         {
             DataTable adjacencyTable = new DataTable("AdjacencyTable");
             List<List<int>> adjacencyMatrix = GraphWorkerCpp.GetAdjacencyMatrix();
-            for (int i = 0; i < adjacencyMatrix.Count; i++)
+            for (int i = 0; i < adjacencyMatrix[0].Count; i++)
             {
                 DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
                 adjacencyTable.Columns.Add(dataColumn);
@@ -217,7 +217,7 @@ namespace GraphWPF
         {
             DataTable incidenceTable = new DataTable("IncidenceTable");
             List<List<short>> incidenceMatrix = GraphWorkerCpp.GetIncidenceMatrix();
-            for (int i = 0; i < incidenceMatrix.Count; i++)
+            for (int i = 0; i < incidenceMatrix[0].Count; i++)
             {
                 DataColumn dataColumn = new DataColumn(Convert.ToString(i), typeof(int));
                 incidenceTable.Columns.Add(dataColumn);

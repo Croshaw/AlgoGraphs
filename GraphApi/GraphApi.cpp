@@ -229,7 +229,7 @@ Generic::List<Generic::List<int>^>^ GraphApi::GraphHelper::weightMatrix() {
 	int numNodes = nodes->Count;
 
 	for (int i = 0; i < numNodes; i++) {
-		auto row = gcnew Generic::List<int>);
+		auto row = gcnew Generic::List<int>();
 		for (int i = 0; i < numNodes; i++)
 			row->Add(0);
 		weightMatrix->Add(row);
