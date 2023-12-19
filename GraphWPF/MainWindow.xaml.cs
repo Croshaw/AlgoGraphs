@@ -169,7 +169,7 @@ namespace GraphWPF
             for (int i = 0; i < weightMatrix.Count; i++)
             {
                 DataRow dataRow = weightTable.NewRow();
-                for (int j = 0; j < weightMatrix[i].Count; j++)
+                for (int j = 0; j < weightMatrix.Count; j++)
                 {
                     if (weightMatrix[i][j] == -1)
                     {
@@ -198,7 +198,7 @@ namespace GraphWPF
             for (int i = 0; i < adjacencyMatrix.Count; i++)
             {
                 DataRow dataRow = adjacencyTable.NewRow();
-                for (int j = 0; j < adjacencyMatrix[i].Count; j++)
+                for (int j = 0; j < adjacencyMatrix.Count; j++)
                 {
                     dataRow[j] = adjacencyMatrix[i][j];
                 }
@@ -232,6 +232,21 @@ namespace GraphWPF
         private void MenuItem_Click_ClearField(object sender, RoutedEventArgs e)
         {
             DrawGraph.ClearVisualization();
+        }
+
+        private void SearchMode_Checked(object sender, RoutedEventArgs e)
+        {
+            GraphWorkerCpp.DrawMinSpanningTree();
+        }
+
+        private void SearchMode_Unchecked(object sender, RoutedEventArgs e)
+        {
+            DrawGraph.SelectionClear();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            canvas.Width = this.ActualWidth;
         }
     }
 }

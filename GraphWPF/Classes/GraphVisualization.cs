@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using GraphWPF.Classes.ArrowLineControl;
 using GraphApi;
 using System.Diagnostics.Eventing.Reader;
+using System.Reflection;
 
 namespace GraphWPF.Classes {
 
@@ -38,12 +39,13 @@ namespace GraphWPF.Classes {
         private Line? LineUnion { get; set; }
         private Ellipse? SelectedSupportEllipse { get; set; }
         private ArrowLine? SelectedLine { get; set; }
-
         private List<Ellipse> EllipseList { get; set; }
+
+
         private Dictionary<Ellipse, List<Ellipse>> SupportElipses { get; set; }
         private Dictionary<Ellipse, List<ArrowLine>> LinesData { get; set; }
-        private Dictionary<ArrowLine,List<Ellipse>> EllipseLinks { get; set; }
-        private Dictionary<Ellipse, TextBlock> EllipseData { get; set; }
+        public Dictionary<ArrowLine,List<Ellipse>> EllipseLinks { get; private set; }
+        public Dictionary<Ellipse, TextBlock> EllipseData { get; private set; }
         private Dictionary<ArrowLine, int> ArrowsWeight { get; set; }
 
         private Canvas CanvasControl { get; set; }
@@ -624,6 +626,7 @@ namespace GraphWPF.Classes {
 
         private void Ellipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+           
             SelectedEllipse = SearchEllipse(Mouse.GetPosition(CanvasControl));
             if (SelectedEllipse != null)
             {
@@ -788,7 +791,38 @@ namespace GraphWPF.Classes {
             {
                 RemoveNode(item);
             }
-            int i = 10;
+            increment = 1;
         }
+
+        public void TurnOnSearchMode()
+        {
+          
+           // _searchMode = true;
+        }
+        public void TurnOffSearchMode()
+        {
+
+           // _searchMode = true;
+        }
+
+        public void DrawingEdge(ArrowLine line, Ellipse firstNode, Ellipse secondNode)
+        {
+            line.Stroke = Brushes.Red;
+            line.Fill = Brushes.Red;
+            firstNode.Stroke = Brushes.Red;
+            secondNode.Stroke = Brushes.Red;
+        }
+
+        public void SelectionClear()
+        {
+            foreach(var item in EllipseLinks)
+            {
+                item.Key.Stroke = Brushes.Black;
+                item.Key.Fill = Brushes.Black;
+                item.Value[0].Stroke = Brushes.Black;
+                item.Value[1].Stroke = Brushes.Black;
+            }
+        }
+       
     }
 }

@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 
 #include "GraphApi.h"
+#include <set>
 
 
 bool GraphApi::Graph::containsEdge(Node^ begin, Node^ end)
@@ -200,9 +201,9 @@ Generic::List<Generic::List<short>^>^ GraphApi::GraphHelper::incidenceMatrix() {
 		int val = edge->weight == 0 ? 1 : edge->weight;
 		if (edge->direction == 0 || edge->direction == 1 || edge->direction == -1) {
 			auto t = incidenceMatrix[beginIndex];
-			t[id] = val * (edge->direction == 1 ? -1 : 1);
+			t[id] = val * (edge->direction == 1 ? 1 : -1);
 			t = incidenceMatrix[endIndex];
-			t[id] = val * (edge->direction == -1 ? -1 : 1);
+			t[id] = val * (edge->direction == -1 ? 1 : -1);
 		}
 		else if (edge->direction == 2) {
 			for each (auto tempList in incidenceMatrix) {
@@ -257,41 +258,38 @@ Generic::List<Generic::List<int>^>^ GraphApi::GraphHelper::weightMatrix() {
 }
 
 Generic::List<GraphApi::Edge^>^ GraphApi::GraphHelper::minSpanningTree() {
-	auto minSpanningTree = gcnew Generic::List<GraphApi::Edge^>();
+	System::Collections::Generic::List<Edge^>^ mst = gcnew System::Collections::Generic::List<Edge^>();
 	auto nodes = graph->getNodes();
-	auto edges = gcnew Generic::List<GraphApi::Edge^>(graph->getEdges());
+	auto edges = graph->getEdges();
+	if (nodes->Count == 0 || edges->Count == 0)
+		return mst;
 
-	if (nodes->Count == 0) {
-		throw gcnew System::InvalidOperationException("Граф не содержит вершин.");
-	}
+	Generic::List<GraphApi::Node^>^ remainingNodes = gcnew Generic::List<GraphApi::Node^>(nodes);
+	Node^ startNode = nodes[0];
+	remainingNodes->Remove(startNode);
 
-	for (int i = 0; i < edges->Count; i++) {
-		int min_index = i;
-		for (int j = i + 1; j < edges->Count; j++) {
-			if (edges[j]->weight < edges[min_index]->weight) {
-				min_index = j;
+	while (remainingNodes->Count != 0) {
+		Edge^ minEdge = nullptr;
+		int minWeight = std::numeric_limits<int>::max();
+
+		for each (Edge ^ edge in edges) {
+			// Проверяем, принадлежит ли начальная или конечная точка ребра оставшимся узлам
+			if (remainingNodes->Contains(edge->begin) ^ remainingNodes->Contains(edge->end)) {
+				if (edge->weight < minWeight) {
+					minWeight = edge->weight;
+					minEdge = edge;
+				}
 			}
 		}
-		if (min_index != i) {
-			Edge^ temp = edges[min_index];
-			edges[min_index] = edges[i];
-			edges[i] = temp;
+
+		if (minEdge != nullptr) {
+			mst->Add(minEdge);
+			remainingNodes->Remove(minEdge->begin);
+			remainingNodes->Remove(minEdge->end);
 		}
 	}
 
-	Generic::List<Node^>^ addedNodes = gcnew Generic::List<Node^>();
-
-	for each (auto edge in edges) {
-		if (addedNodes->Count == nodes->Count)
-			break;
-		if (!addedNodes->Contains(edge->begin))
-			addedNodes->Add(edge->begin);
-		if (!addedNodes->Contains(edge->end))
-			addedNodes->Add(edge->end);
-		minSpanningTree->Add(edge);
-	}
-
-	return minSpanningTree;
+	return mst;
 }
 
 int GraphApi::GraphHelper::getPathLength()
