@@ -10,7 +10,7 @@
         Title="MainWindow" Height="600" Width="900"
         Topmost="True" WindowStyle="None"
         ResizeMode="CanResizeWithGrip" 
-        AllowsTransparency="True">
+        AllowsTransparency="True" SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <Style x:Key="ContextMenuStyle1" 
     TargetType="{x:Type ContextMenu}">
@@ -169,7 +169,7 @@
                                 <RadioButton x:Name="SetDirected" Content="Ориентированный" IsChecked ="True" Checked="SetDirected_Checked"/>
                                 <RadioButton x:Name="SetUndirected" Content="Неориентированный" IsChecked="False" Checked="SetUndirected_Checked"/>
                             </MenuItem>
-                            <RadioButton x:Name="SearchMode" Content="Режим поиска" IsChecked="False"/>
+                            <CheckBox x:Name="SearchMode" Content="Режим поиска" IsChecked="False" Checked="SearchMode_Checked" Unchecked="SearchMode_Unchecked"/>
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>

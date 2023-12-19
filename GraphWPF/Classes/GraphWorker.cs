@@ -127,5 +127,23 @@ namespace GraphWPF.Classes
             GraphHelper graphHelper = new GraphHelper(GraphCpp);
             return graphHelper.incidenceMatrix();
         }
+
+        public void DrawMinSpanningTree()
+        {
+            GraphHelper graphHelper = new GraphHelper(GraphCpp);
+            List<Edge> edges = graphHelper.minSpanningTree();
+            foreach (Edge edge in edges)
+            {
+                foreach(var item in GraphVisualization.EllipseLinks)
+                {
+                    Node firstNode = edge.begin;
+                    Node secondNode = edge.end;
+                    if (GraphVisualization.EllipseData[item.Value[0]].Text == firstNode.name&& GraphVisualization.EllipseData[item.Value[1]].Text == secondNode.name)
+                    {
+                        GraphVisualization.DrawingEdge(item.Key, item.Value[0], item.Value[1]);
+                    }
+                }
+            }
+        }
     }
 }
